@@ -1,10 +1,14 @@
 import "./App.css"
+import { ThemeProvider } from "@material-ui/core/styles"
+import theme from "./theme/theme"
 
 function App() {
   return (
-    <div className="App">
-      <p>Proyecto</p>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <p>Proyecto</p>
+      </div>
+    </ThemeProvider>
   )
 }
 
