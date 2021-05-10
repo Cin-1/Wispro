@@ -1,16 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
+import { useHistory } from "react-router-dom"
 import TextField from "@material-ui/core/TextField"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
-import Link from "@material-ui/core/Link"
 import Paper from "@material-ui/core/Paper"
 import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
+import Swal from "sweetalert2"
+import { connect } from "react-redux"
+import { sessionLogin } from "../Redux/actions/userActions.js"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,8 +46,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SignInSide() {
+function SignInSide() {
   const classes = useStyles()
+
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  })
+
+  const handleInputChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  let history = useHistory()
+
+  const submitForm = (e) => {
+    e.preventDefault()
+    sessionLogin(values)
+      .then((res) => {
+        if (res.status === "error") {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Tuviste un Error al iniciar sesion, reingresa tus datos",
+          }).then(() => {
+            setValues({
+              email: "",
+              password: "",
+            })
+          })
+        }
+        if (res.us.active === true) {
+          Swal.fire("Bienvenido").then(() => {
+            history.push("/home")
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -60,7 +102,11 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={(e) => submitForm(e)}
+          >
             <TextField
               variant="outlined"
               margin="normal"
@@ -71,6 +117,8 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={values.email}
+              onChange={handleInputChange}
             />
             <TextField
               variant="outlined"
@@ -82,11 +130,10 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={values.password}
+              onChange={handleInputChange}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -96,21 +143,15 @@ export default function SignInSide() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </div>
       </Grid>
     </Grid>
   )
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  sessionLogin: (value) => dispatch(sessionLogin(value)),
+})
+
+export default connect(null, mapDispatchToProps)(SignInSide)
