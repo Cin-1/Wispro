@@ -6,60 +6,15 @@ import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
-import { Typography, Button } from "@material-ui/core"
-import { GetAllUsers } from "../Redux/Actions/actionsUsers"
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount }
-}
-
-const rows = [
-  createData(
-    0,
-    "16 Mar, 2019",
-    "Elvis Presley",
-    "Tupelo, MS",
-    "VISA ⠀•••• 3719",
-    312.44
-  ),
-  createData(
-    1,
-    "16 Mar, 2019",
-    "Paul McCartney",
-    "London, UK",
-    "VISA ⠀•••• 2574",
-    866.99
-  ),
-  createData(
-    2,
-    "16 Mar, 2019",
-    "Tom Scholz",
-    "Boston, MA",
-    "MC ⠀•••• 1253",
-    100.81
-  ),
-  createData(
-    3,
-    "16 Mar, 2019",
-    "Michael Jackson",
-    "Gary, IN",
-    "AMEX ⠀•••• 2000",
-    654.39
-  ),
-  createData(
-    4,
-    "15 Mar, 2019",
-    "Bruce Springsteen",
-    "Long Branch, NJ",
-    "VISA ⠀•••• 5919",
-    212.79
-  ),
-]
-
-function preventDefault() {
-  event.preventDefault()
-}
+import { Typography, Button, FormControlLabel } from "@material-ui/core"
+import { connect } from "react-redux"
+import { GetAllUsers, DeleteUser } from "../Redux/Actions/actionsUsers"
+import DeleteIcon from "@material-ui/icons/Delete"
+import InfoIcon from "@material-ui/icons/Info"
+import Dialog from "@material-ui/core/Dialog"
+import ModalEdit from "./ModalEdit"
+import FormDialog from "./ModalEdit"
+import Swal from "sweetalert2"
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -67,58 +22,76 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Users({ users, GetAllUsers, loading, error }) {
+function Users({ users, GetAllUsers, loading, error, DeleteUser }) {
   const classes = useStyles()
 
   const [listUsers, setListUsers] = useState([])
+
   useEffect(() => {
     GetAllUsers()
-    setListUsers()
+    setListUsers(users)
   }, [])
-
+  const deleteUserId = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        DeleteUser(id)
+      }
+    })
+  }
   return (
     <React.Fragment>
       <Typography>Recent Users</Typography>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>LastName</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>DNI</TableCell>
+      {loading.loading ? <p>Loading...</p> : null}
+      {error.error ? <p>Error loading users </p> : null}
+      {listUsers.lenght === 0 ? null : (
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>LastName</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>DNI</TableCell>
 
-            <TableCell align="right">Address</TableCell>
-            <TableCell>Edit</TableCell>
-            <TableCell>Delete</TableCell>
-            <TableCell>Info</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
-              <TableCell>
-                <Button>Edit</Button>
-              </TableCell>
-              <TableCell>
-                <Button>Delete</Button>
-              </TableCell>
-              <TableCell>
-                <Button>Info</Button>
-              </TableCell>
+              <TableCell align="right">Address</TableCell>
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
+              <TableCell>Info</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more Users
-        </Link>
-      </div>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.lastName}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.adress}</TableCell>
+                <TableCell align="right">{user.dni}</TableCell>
+                <TableCell>
+                  <FormDialog user={user} />
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => deleteUserId(user.id)}>
+                    <DeleteIcon />
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button>
+                    <InfoIcon />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </React.Fragment>
   )
 }
@@ -131,4 +104,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   GetAllUsers: () => dispatch(GetAllUsers()),
+  DeleteUser: (id) => dispatch(DeleteUser(id)),
 })
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

@@ -5,6 +5,8 @@ import {
   GET_USER,
   EDIT_USER,
   DELETE_USER,
+  DELETE_USER_ERROR,
+  DELETE_USER_SUCCESS,
   ADD_USER,
   ADD_USER_ERROR,
   ADD_USER_SUCCESS,
@@ -37,8 +39,40 @@ export function CreateNewUser(user) {
 export function GetAllUsers() {
   return async (dispatch) => {
     dispatch(getUsers())
+    try {
+      const res = await request.get("/users")
+      dispatch(getUsersSuccess(res.data))
+    } catch (err) {
+      console.log(err)
+      dispatch(getUsersError())
+    }
   }
 }
+export function DeleteUser(id) {
+  return async (dispatch) => {
+    dispatch(deleteU(id))
+
+    try {
+      await request.delete(`/users/${id}`)
+      dispatch(deleteSuccess())
+      Swal.fire("Deleted!", "The user has been deleted.", "success")
+    } catch (err) {
+      console.log(err)
+      dispatch(deleteError())
+    }
+  }
+}
+
+const deleteU = (id) => ({
+  type: DELETE_USER,
+  payload: id,
+})
+const deleteSuccess = () => ({
+  type: DELETE_USER_SUCCESS,
+})
+const deleteError = () => ({
+  type: DELETE_USER_ERROR,
+})
 const addUser = () => ({
   type: ADD_USER,
 })
@@ -58,8 +92,9 @@ const getUsers = () => ({
   type: GET_ALL_USERS,
 })
 
-const getUsersSuccess = () => ({
+const getUsersSuccess = (users) => ({
   type: GET_ALL_USERS_SUCCESS,
+  payload: users,
 })
 const getUsersError = () => ({
   type: GET_ALL_USERS_ERROR,
