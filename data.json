@@ -5,16 +5,49 @@
   },
   "users": [
     {
+      "id": 1,
       "name": "Alejandro",
-      "lastname": "Romano",
+      "lastName": "Romano",
       "email": "aleroma@gmail.com",
-      "dni": "40258951",
-      " date": "25/04/2021",
+      "dni": 40258951,
       "address": "Medrano 3345 5d",
-      "id": "1",
-      "location": {
-        "loc": "lat: -31.734233 , lng: -60.515123"
-      }
+      "password": "sfffrhjgh"
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "Cinthia Pardos",
+      "lastName": "pardos",
+      "dni": "06614132",
+      "password": "perromuerto",
+      "adress": "a@gmail.com",
+      "id": 2
+    },
+    {
+      "email": "mazzalaialan@gmail.com",
+      "name": "a",
+      "lastName": "alan",
+      "dni": "06614132",
+      "password": "perromuerto",
+      "adress": "a@gmail.com",
+      "id": 3
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "romina ",
+      "lastName": "pardos",
+      "dni": "745767786",
+      "password": "perromuerto",
+      "adress": "a@gmail.com",
+      "id": 4
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "romina ",
+      "lastName": "pardos",
+      "dni": "745767786",
+      "password": "perromuerto",
+      "adress": "a@gmail.com",
+      "id": 5
     }
   ]
 }

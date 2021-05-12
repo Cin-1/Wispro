@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import Swal from "sweetalert2"
 import { connect } from "react-redux"
-import { sessionLogin } from "../Redux/actions/userActions.js"
+import { sessionLogin } from "../Redux/Actions/actionsUsers.js"
 
 const useStyles = makeStyles((theme) => ({
   root: {
