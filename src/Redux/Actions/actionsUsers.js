@@ -2,8 +2,9 @@ import {
   GET_ALL_USERS,
   GET_ALL_USERS_ERROR,
   GET_ALL_USERS_SUCCESS,
-  GET_USER,
   EDIT_USER,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_ERROR,
   DELETE_USER,
   DELETE_USER_ERROR,
   DELETE_USER_SUCCESS,
@@ -33,6 +34,19 @@ export function CreateNewUser(user) {
     } catch (err) {
       console.log(err)
       dispatch(addUserErr())
+    }
+  }
+}
+export function EditUser(id, user) {
+  return async (dispatch) => {
+    dispatch(editUser(user))
+    try {
+      await request.put(`/users/${id}`)
+      dispatch(editUserSuccess(user))
+      Swal.fire("Succesful edition")
+    } catch (err) {
+      console.log(err)
+      dispatch(editUserErr())
     }
   }
 }
@@ -98,4 +112,17 @@ const getUsersSuccess = (users) => ({
 })
 const getUsersError = () => ({
   type: GET_ALL_USERS_ERROR,
+})
+
+const editUser = () => ({
+  type: EDIT_USER,
+})
+
+const editUserSuccess = (user) => ({
+  type: EDIT_USER_SUCCESS,
+  payload: user,
+})
+
+const editUserErr = () => ({
+  type: EDIT_USER_ERROR,
 })

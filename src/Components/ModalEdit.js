@@ -9,14 +9,15 @@ import DialogTitle from "@material-ui/core/DialogTitle"
 import EditIcon from "@material-ui/icons/Edit"
 import userEvent from "@testing-library/user-event"
 import { connect } from "react-redux"
+import { EditUser } from "../Redux/Actions/actionsUsers.js"
 
-function FormDialog({ user }) {
+function FormDialog({ user, EditUser }) {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
-
+  console.log(user)
   const handleClose = () => {
     setOpen(false)
   }
@@ -36,6 +37,11 @@ function FormDialog({ user }) {
 
   const submitForm = (e) => {
     e.preventDefault()
+
+    if (values.email && values.lastName && values.name) {
+      EditUser(user.id, values)
+      handleClose()
+    }
   }
 
   return (
@@ -124,6 +130,8 @@ const mapStateToProps = (state) => ({
   error: state,
 })
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  EditUser: (id, values) => dispatch(EditUser(id, values)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDialog)
