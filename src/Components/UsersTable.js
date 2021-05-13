@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
-import { Typography, Button, FormControlLabel } from "@material-ui/core"
+import { Typography, Button, FormControlLabel, Box } from "@material-ui/core"
 import { connect } from "react-redux"
 import { GetAllUsers, DeleteUser } from "../Redux/Actions/actionsUsers"
 import DeleteIcon from "@material-ui/icons/Delete"
@@ -15,10 +15,24 @@ import Dialog from "@material-ui/core/Dialog"
 import ModalEdit from "./ModalEdit"
 import FormDialog from "./ModalEdit"
 import Swal from "sweetalert2"
+import createMixins from "@material-ui/core/styles/createMixins"
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
     marginTop: theme.spacing(3),
+  },
+  subtitle: {
+    fontSize: "1rem",
+    display: "flex",
+    justifyContent: "space-around",
+  },
+  cells: {
+    color: "white",
+  },
+  row: {
+    "&:hover": {
+      backgroundColor: "rgb(245,245,245)",
+    },
   },
 }))
 
@@ -48,32 +62,42 @@ function Users({ users, GetAllUsers, loading, error, DeleteUser }) {
   }
   return (
     <React.Fragment>
-      <Typography>Recent Users</Typography>
-      {loading.loading ? <p>Loading...</p> : null}
-      {error.error ? <p>Error loading users </p> : null}
-      {listUsers.lenght === 0 ? null : (
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>LastName</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>DNI</TableCell>
+      <Box ml={2} mt={1}>
+        <Typography variant="h4">Recent Users</Typography>
+      </Box>
+      <Box className={classes.subtitle} ml={2} mb={2}>
+        <Typography variant="h6">Filters</Typography>
+        <Typography variant="h6">Filters</Typography>
+        <Typography variant="h6">Filters</Typography>
 
-              <TableCell align="right">Address</TableCell>
-              <TableCell>Edit</TableCell>
-              <TableCell>Delete</TableCell>
-              <TableCell>Info</TableCell>
+        {loading.loading ? <p>Loading...</p> : null}
+        {error.error ? <p>Error loading users </p> : null}
+      </Box>
+      {!users ? null : (
+        <Table size="small">
+          <TableHead
+            style={{ backgroundColor: "rgb(81, 118, 199)", color: "white" }}
+          >
+            <TableRow>
+              <TableCell className={classes.cells}>Name</TableCell>
+              <TableCell className={classes.cells}>LastName</TableCell>
+              <TableCell className={classes.cells}>Email</TableCell>
+              <TableCell className={classes.cells}>DNI</TableCell>
+
+              <TableCell className={classes.cells}>Address</TableCell>
+              <TableCell className={classes.cells}>Edit</TableCell>
+              <TableCell className={classes.cells}>Delete</TableCell>
+              <TableCell className={classes.cells}>Info</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.id}>
+              <TableRow key={user.id} className={classes.row}>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.lastName}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.adress}</TableCell>
-                <TableCell align="right">{user.dni}</TableCell>
+                <TableCell>{user.dni}</TableCell>
                 <TableCell>
                   <FormDialog user={user} />
                 </TableCell>
