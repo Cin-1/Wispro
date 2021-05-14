@@ -11,38 +11,10 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import { connect } from "react-redux"
 import { CreateNewUser } from "../Redux/Actions/actionsUsers.js"
+import NewUser from "./newUser.js"
 
-function RegisterSide({ CreateNewUser, loading, error, redirect }) {
+function RegisterSide() {
   const classes = useStyles()
-  console.log(error.error)
-
-  const [values, setValues] = useState({
-    email: "",
-    name: "",
-    lastName: "",
-    dni: 0,
-    password: "",
-    adress: "",
-  })
-
-  const handleInputChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  let history = useHistory()
-  if (redirect.redirect) {
-    history.push("/")
-  }
-
-  const submitForm = (e) => {
-    e.preventDefault()
-    if (values.email && values.lastName && values.name) {
-      CreateNewUser(values)
-    } else return
-  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -56,120 +28,14 @@ function RegisterSide({ CreateNewUser, loading, error, redirect }) {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          {loading.loading ? <p>Loading...</p> : null}
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={(e) => submitForm(e)}
-          >
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={values.email}
-              onChange={handleInputChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              name="name"
-              autoComplete="name"
-              autoFocus
-              value={values.name}
-              onChange={handleInputChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="lastname"
-              label="Lastname"
-              name="lastName"
-              autoComplete="lastname"
-              autoFocus
-              value={values.lastName}
-              onChange={handleInputChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="DNI"
-              label="DNI"
-              name="dni"
-              autoComplete="DNI"
-              autoFocus
-              type="number"
-              value={values.dni}
-              onChange={handleInputChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="adress"
-              label="Adress"
-              name="adress"
-              autoComplete="adress"
-              autoFocus
-              value={values.adress}
-              onChange={handleInputChange}
-            />
-
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={values.password}
-              onChange={handleInputChange}
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Send
-            </Button>
-          </form>
-          {error.error ? <p>There was an error. Please try again </p> : null}
+          <NewUser />
         </div>
       </Grid>
     </Grid>
   )
 }
-const mapStateToProps = (state) => ({
-  loading: state,
-  error: state,
-  redirect: state,
-})
 
-const mapDispatchToProps = (dispatch) => ({
-  CreateNewUser: (values) => dispatch(CreateNewUser(values)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterSide)
+export default RegisterSide
 
 const useStyles = makeStyles((theme) => ({
   root: {
