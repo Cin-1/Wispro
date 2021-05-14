@@ -12,9 +12,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/" component={SignInSide} exact />
-          <Route path="/users" component={Users} exact />
+          <Route path="/users" component={Users} />
           <Route path="/register" component={Register} exact />
-
           <Route path="/post/:id" />
         </Switch>
       </BrowserRouter>

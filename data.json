@@ -1,17 +1,13 @@
 {
-  "auth": {
-    "email": "cinthiapardos@gmail.com",
-    "password": "admin"
-  },
   "users": [
     {
-      "id": 1,
       "name": "Alejandro",
       "lastName": "Romano",
-      "email": "aleroma@gmail.com",
+      "email": "ale@gmail.com",
       "dni": 40258951,
       "address": "Medrano 3345 5d",
-      "password": "sfffrhjgh"
+      "password": "21232f297a57a5a743894a0e4a801fc3",
+      "id": 1
     },
     {
       "email": "cinthiapardos@gmail.com",
@@ -42,12 +38,147 @@
     },
     {
       "email": "cinthiapardos@gmail.com",
-      "name": "romina ",
+      "name": "gustavo pardos",
       "lastName": "pardos",
-      "dni": "745767786",
+      "dni": "351233614",
+      "password": "onepiece123",
+      "adress": "cinthia",
+      "id": 5
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "gustavo pardos",
+      "lastName": "pardos",
+      "dni": "362033354",
+      "password": "karateka",
+      "adress": "cinthiapardos@gmail.com",
+      "id": 6
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "gustavo pardos",
+      "lastName": "pardos",
+      "dni": "",
+      "password": "514145564684",
+      "adress": "51456446",
+      "id": 7
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "gustavo pardos",
+      "lastName": "pardos",
+      "dni": "33336641",
+      "password": "onepiece123",
+      "adress": "cinthia",
+      "id": 8
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "gustavo pardos",
+      "lastName": "pardos",
+      "dni": "",
+      "password": "onepiece123",
+      "adress": "cinthia",
+      "id": 9
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "sefsfd",
+      "lastName": "dgdg",
+      "dni": "",
+      "password": "gdggjxfgjy",
+      "adress": "dftzdzg",
+      "id": 10
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "gustavo pardos",
+      "lastName": "pardos",
+      "dni": "5215142",
+      "password": "514145564684",
+      "adress": "51456446",
+      "id": 11
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "d",
+      "lastName": "d",
+      "dni": "",
       "password": "perromuerto",
       "adress": "a@gmail.com",
-      "id": 5
+      "id": 12
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "gustavo pardos",
+      "lastName": "pardos",
+      "dni": "1234523",
+      "password": "hfh",
+      "adress": "6yh",
+      "id": 13
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "Cinthia Pardos",
+      "lastName": "pardos",
+      "dni": "45414450",
+      "password": "514145564684",
+      "adress": "51456446",
+      "id": 14
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "gustavo pardos",
+      "lastName": "pardos",
+      "dni": "",
+      "password": "514145564684",
+      "adress": "51456446",
+      "id": 15
+    },
+    {
+      "email": "fhfh",
+      "name": "hjfh",
+      "lastName": "dfrg",
+      "dni": "",
+      "password": "12345678",
+      "adress": "aasas@gmail.com",
+      "id": 16
+    },
+    {
+      "email": "thxfd",
+      "name": "fxhth",
+      "lastName": "dfhhdcg",
+      "dni": "",
+      "password": "12345678",
+      "adress": "aaas@gmail.com",
+      "id": 17
+    },
+    {
+      "email": "fxgthxfgthxhftxfhgt",
+      "name": "ftffthfxhtfxgh",
+      "lastName": "fdrgftxh",
+      "dni": "",
+      "password": "12345678",
+      "adress": "aaadgdgs@gmail.com",
+      "id": 18
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "Cinthia Pardos",
+      "lastName": "fsFsRf",
+      "dni": "",
+      "password": "thdgdzgsxdf",
+      "adress": "fghdgdg",
+      "id": 19
+    },
+    {
+      "email": "cinthiapardos@gmail.com",
+      "name": "Cinthia Pardos",
+      "lastName": "fsFsRf",
+      "dni": "",
+      "password": "thdgdzgsxdf",
+      "adress": "fghdgdg",
+      "id": 20
     }
   ]
 }
