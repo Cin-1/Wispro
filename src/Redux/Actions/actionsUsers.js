@@ -11,8 +11,9 @@ import {
   ADD_USER,
   ADD_USER_ERROR,
   ADD_USER_SUCCESS,
-  API_URL,
   LOGIN,
+  LOGIN_ERROR,
+  LOGIN_SUCCESS,
   LOGOUT,
   GET_SESSION_USER,
   GET_REGISTER,
@@ -21,7 +22,24 @@ import {
 import request from "../../Services/api"
 import Swal from "sweetalert2"
 
-export const sessionLogin = {}
+export function LoginUser(email, pass) {
+  return async (dispatch) => {
+    dispatch(getUserLogin())
+    try {
+      const res = await request.get("/users", {
+        params: { email: email, password: pass },
+      })
+      if (res.data.length > 0) {
+        const user = res.data[0]
+        delete user.password
+        dispatch(getLoginSuccess(user))
+      } else dispatch(getLoginError())
+    } catch (err) {
+      console.log(err)
+      dispatch(getLoginError())
+    }
+  }
+}
 
 export function CreateNewUser(user) {
   return async (dispatch) => {
@@ -29,7 +47,7 @@ export function CreateNewUser(user) {
     try {
       await request.post("/users", user)
       dispatch(addUserSuccess(user))
-      Swal.fire("Bienvenido")
+      Swal.fire("Usuario creado")
       dispatch(redirect())
     } catch (err) {
       console.log(err)
@@ -125,4 +143,15 @@ const editUserSuccess = (user) => ({
 
 const editUserErr = () => ({
   type: EDIT_USER_ERROR,
+})
+const getUserLogin = () => ({
+  type: LOGIN,
+})
+
+const getLoginSuccess = (user) => ({
+  type: LOGIN_SUCCESS,
+  payload: user,
+})
+const getLoginError = () => ({
+  type: LOGIN_ERROR,
 })

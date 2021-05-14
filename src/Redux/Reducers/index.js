@@ -14,6 +14,8 @@ import {
   ADD_USER_SUCCESS,
   LOGOUT,
   LOGIN,
+  LOGIN_ERROR,
+  LOGIN_SUCCESS,
   REDIRECT,
 } from "../Actions/constants"
 
@@ -23,12 +25,14 @@ const initialState = {
   error: false,
   redirect: false,
   idUserToDelete: null,
+  userLogged: [],
 }
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_USER:
     case GET_ALL_USERS:
+    case LOGIN:
       return { ...state, loading: true }
     case GET_ALL_USERS_SUCCESS:
       return {
@@ -36,6 +40,13 @@ export default function rootReducer(state = initialState, action) {
         loading: false,
         error: false,
         users: action.payload,
+      }
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        userLogged: action.payload,
       }
     case REDIRECT:
       return {
@@ -61,6 +72,7 @@ export default function rootReducer(state = initialState, action) {
         error: false,
         users: [...state.users, action.payload],
       }
+    case LOGIN_ERROR:
     case DELETE_USER_ERROR:
     case ADD_USER_ERROR:
     case GET_ALL_USERS_ERROR:

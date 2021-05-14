@@ -16,6 +16,8 @@ import ModalEdit from "./ModalEdit"
 import FormDialog from "./ModalEdit"
 import Swal from "sweetalert2"
 import createMixins from "@material-ui/core/styles/createMixins"
+import ModalNewUser from "./ModalNewUser"
+import NavBar from "./NavBar"
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -62,7 +64,8 @@ function Users({ users, GetAllUsers, loading, error, DeleteUser }) {
   }
   return (
     <React.Fragment>
-      <Box ml={2} mt={1}>
+      <NavBar />
+      <Box ml={2} mt={10}>
         <Typography variant="h4">Recent Users</Typography>
       </Box>
       <Box className={classes.subtitle} ml={2} mb={2}>
@@ -88,6 +91,9 @@ function Users({ users, GetAllUsers, loading, error, DeleteUser }) {
               <TableCell className={classes.cells}>Edit</TableCell>
               <TableCell className={classes.cells}>Delete</TableCell>
               <TableCell className={classes.cells}>Info</TableCell>
+              <TableCell>
+                <ModalNewUser />
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

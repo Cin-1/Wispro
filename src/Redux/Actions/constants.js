@@ -1,4 +1,6 @@
 export const LOGIN = "LOGIN"
+export const LOGIN_ERROR = "LOGIN_ERROR"
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const GET_ALL_USERS = "GET_ALL_USERS"
 export const GET_ALL_USERS_ERROR = "GET_ALL_USERS_ERROR"
 export const GET_ALL_USERS_SUCCESS = "GET_ALL_USERS_SUCCESS"
