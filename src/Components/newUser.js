@@ -12,33 +12,17 @@ import { makeStyles } from "@material-ui/core/styles"
 import { connect } from "react-redux"
 import { CreateNewUser } from "../Redux/Actions/actionsUsers.js"
 import md5 from "md5"
+import useForm from "./forms/useForm"
+import validate from "./forms/Validations"
 
 const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
   const classes = useStyles()
 
-  const [values, setValues] = useState({
-    email: "",
-    name: "",
-    lastName: "",
-    dni: 0,
-    password: "",
-    adress: "",
-  })
-
-  const handleInputChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    })
-  }
-
   let history = useHistory()
 
-  const submitForm = (e) => {
-    e.preventDefault()
-    if (values.email && values.lastName && values.name) {
-      CreateNewUser(values)
-    }
+  const submit = () => {
+    CreateNewUser(values)
+    reset()
     if (window.location.pathname === "/users") {
       handleClose()
     }
@@ -46,8 +30,14 @@ const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
       history.push("/")
     } else return
   }
+
+  const { values, handleChange, handleSubmit, errors, reset } = useForm(
+    submit,
+    validate
+  )
+
   return (
-    <form className={classes.form} noValidate onSubmit={(e) => submitForm(e)}>
+    <form className={classes.form} noValidate onSubmit={(e) => handleSubmit(e)}>
       {loading.loading ? <p>Loading...</p> : null}
 
       {error.error ? <p>There was an error. Please try again </p> : null}
@@ -62,8 +52,9 @@ const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
         autoComplete="email"
         autoFocus
         value={values.email}
-        onChange={handleInputChange}
+        onChange={(e) => handleChange(e)}
       />
+      {errors.email && <p className={classes.errors}>{errors.email}</p>}
       <TextField
         variant="outlined"
         margin="normal"
@@ -75,8 +66,10 @@ const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
         autoComplete="name"
         autoFocus
         value={values.name}
-        onChange={handleInputChange}
+        onChange={(e) => handleChange(e)}
       />
+      {errors.name && <p className={classes.errors}>{errors.name}</p>}
+
       <TextField
         variant="outlined"
         margin="normal"
@@ -88,8 +81,10 @@ const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
         autoComplete="lastname"
         autoFocus
         value={values.lastName}
-        onChange={handleInputChange}
+        onChange={(e) => handleChange(e)}
       />
+      {errors.lastName && <p className={classes.errors}>{errors.lastName}</p>}
+
       <TextField
         variant="outlined"
         margin="normal"
@@ -102,8 +97,10 @@ const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
         autoFocus
         type="number"
         value={values.dni}
-        onChange={handleInputChange}
+        onChange={(e) => handleChange(e)}
       />
+      {errors.dni && <p className={classes.errors}>{errors.dni}</p>}
+
       <TextField
         variant="outlined"
         margin="normal"
@@ -115,8 +112,9 @@ const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
         autoComplete="adress"
         autoFocus
         value={values.adress}
-        onChange={handleInputChange}
+        onChange={(e) => handleChange(e)}
       />
+      {errors.adress && <p className={classes.errors}>{errors.adress}</p>}
 
       <TextField
         variant="outlined"
@@ -129,8 +127,9 @@ const NewUser = ({ CreateNewUser, loading, error, redirect, handleClose }) => {
         id="password"
         autoComplete="current-password"
         value={values.password}
-        onChange={handleInputChange}
+        onChange={(e) => handleChange(e)}
       />
+      {errors.password && <p className={classes.errors}>{errors.password}</p>}
 
       <Button
         type="submit"
@@ -163,5 +162,10 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  errors: {
+    marginBottom: "0.2em",
+    color: "palevioletred",
+    display: "block",
   },
 }))

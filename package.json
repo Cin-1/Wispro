@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "formik": "^2.2.6",
     "json-server": "^0.16.3",
     "md5": "^2.3.0",
     "os-utils": "0.0.14",
@@ -24,7 +25,8 @@
     "socket.io-client": "^4.1.1",
     "sweetalert2": "^10.16.7",
     "universal-cookie": "^4.0.4",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",
