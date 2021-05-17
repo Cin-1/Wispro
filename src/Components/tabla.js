@@ -21,11 +21,11 @@ import FilterListIcon from "@material-ui/icons/FilterList"
 import { Box, Button } from "@material-ui/core"
 import { connect } from "react-redux"
 import { GetAllUsers, DeleteUser } from "../Redux/Actions/actionsUsers"
-import InfoIcon from "@material-ui/icons/Info"
 import FormDialog from "./ModalEdit"
 import Swal from "sweetalert2"
 import ModalNewUser from "./ModalNewUser"
 import NavBar from "./NavBar"
+import Chart from "./modalChart"
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -65,48 +65,44 @@ const headCells = [
 ]
 
 function EnhancedTableHead(props) {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    rowCount,
-    onRequestSort,
-  } = props
+  const { classes, onSelectAllClick, order, orderBy, rowCount, onRequestSort } =
+    props
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }
 
   return (
     <>
-        <TableHead style={{marginTop:"20px"}}>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "default"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+      <TableHead style={{ marginTop: "20px" }}>
+        <TableRow>
+          {headCells.map((headCell) => (
+            <TableCell
+              key={headCell.id}
+              align={headCell.numeric ? "right" : "left"}
+              padding={headCell.disablePadding ? "none" : "default"}
+              sortDirection={orderBy === headCell.id ? order : false}
             >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </span>
-              ) : null}
-            </TableSortLabel>
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <span className={classes.visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </span>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+          <TableCell align="right">
+            <ModalNewUser />
           </TableCell>
-        ))}
-        <TableCell align="right">
-          <ModalNewUser />
-        </TableCell>
-      </TableRow>
-    </TableHead>
+        </TableRow>
+      </TableHead>
     </>
   )
 }
@@ -120,12 +116,11 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 }
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: '50px',
-    marginLeft: '5px'
+    marginTop: "50px",
+    marginLeft: "5px",
   },
   paper: {
     width: "100%",
@@ -133,8 +128,7 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 750,
-    marginTop: '30px'
-
+    marginTop: "30px",
   },
   visuallyHidden: {
     border: 0,
@@ -196,111 +190,103 @@ function EnhancedTable({ users, GetAllUsers, loading, error, DeleteUser }) {
     setDense(event.target.checked)
   }
 
-
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, users.len - page * rowsPerPage)
-    
-    console.log(users)
-    const deleteUserId = (id) => {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          DeleteUser(id)
-        }
-      })
-    }
 
+  const deleteUserId = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        DeleteUser(id)
+      }
+    })
+  }
 
   return (
     <>
-    <NavBar/>
+      <NavBar />
 
-    <div className={classes.root}>
-
-      <Paper className={classes.paper}>
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={users.leng}
-            />
-            <TableBody>
-              {stableSort(users, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((user, index) => {
-
-                  return(
-                    <TableRow>
-                      <TableCell
-                        component="th"
-                        id={user.id}
-                        scope="user"
-                        padding="none"
-                      >
-                        {user.name}
-                      </TableCell>
-                      <TableCell align="right">{user.lastName}</TableCell>
-                      <TableCell align="right">{user.email}</TableCell>
-                      <TableCell align="right">{user.adress}</TableCell>
-                      <TableCell align="right">{user.dni}</TableCell>
-                      <TableCell align="right">
-                        <FormDialog user={user} />
-                      </TableCell>
-                      <TableCell align="right">
-                        <Button onClick={() => deleteUserId(user.id)}>
-                          <DeleteIcon />
-                        </Button>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Button>
-                          <InfoIcon />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? "small" : "medium"}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={users.leng}
+              />
+              <TableBody>
+                {stableSort(users, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((user, index) => {
+                    return (
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          id={user.id}
+                          scope="user"
+                          padding="none"
+                        >
+                          {user.name}
+                        </TableCell>
+                        <TableCell align="right">{user.lastName}</TableCell>
+                        <TableCell align="right">{user.email}</TableCell>
+                        <TableCell align="right">{user.adress}</TableCell>
+                        <TableCell align="right">{user.dni}</TableCell>
+                        <TableCell align="right">
+                          <FormDialog user={user} />
+                        </TableCell>
+                        <TableCell align="right">
+                          <Button onClick={() => deleteUserId(user.id)}>
+                            <DeleteIcon />
+                          </Button>
+                        </TableCell>
+                        <TableCell align="right">
+                          <Chart user={user} />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={users.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
         />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </div>
+      </div>
     </>
   )
 }
-
 
 const mapStateToProps = (state) => ({
   users: state.users,

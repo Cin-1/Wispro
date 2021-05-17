@@ -38,8 +38,6 @@ function FormDialog({ user, EditUser, error, loading }) {
     e.preventDefault()
 
     if (values.email && values.lastName && values.name) {
-      console.log(values)
-
       EditUser(user.id, values)
       handleClose()
     }
@@ -57,9 +55,8 @@ function FormDialog({ user, EditUser, error, loading }) {
       >
         <DialogTitle id="form-dialog-title">Edit User</DialogTitle>
         <DialogContent>
-        {error ? <p>There was an error. Please try again </p> : null}
-        {loading ? <p>Loading </p> : null}
-
+          {error ? <p>There was an error. Please try again </p> : null}
+          {loading ? <p>Loading </p> : null}
 
           <form noValidate onSubmit={(e) => submitForm(e)}>
             <TextField
@@ -133,7 +130,7 @@ function FormDialog({ user, EditUser, error, loading }) {
 
 const mapStateToProps = (state) => ({
   error: state.error,
-  loading: state.loading
+  loading: state.loading,
 })
 
 const mapDispatchToProps = (dispatch) => ({

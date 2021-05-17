@@ -7,7 +7,39 @@
       "dni": 40258951,
       "address": "Medrano 3345 5d",
       "password": "21232f297a57a5a743894a0e4a801fc3",
-      "id": 1
+      "id": 1,
+      "access": [
+        {
+          "name": "09/05/2020",
+          "daily access": 2,
+          "pv": 2400,
+          "amt": 2400
+        },
+        {
+          "name": "10/05/2020",
+          "daily access": 20,
+          "pv": 2400,
+          "amt": 2400
+        },
+        {
+          "name": "11/05/2020",
+          "daily access": 17,
+          "pv": 2400,
+          "amt": 2400
+        },
+        {
+          "name": "12/05/2020",
+          "daily access": 6,
+          "pv": 2400,
+          "amt": 2400
+        },
+        {
+          "name": "13/05/2020",
+          "daily access": 23,
+          "pv": 2400,
+          "amt": 2400
+        }
+      ]
     },
     {
       "email": "cinthiapardos@gmail.com",
@@ -71,15 +103,6 @@
       "id": 13
     },
     {
-      "email": "cinthiapardos@gmail.com",
-      "name": "Cinthia Pardos",
-      "lastName": "pardos",
-      "dni": "45414450",
-      "password": "514145564684",
-      "adress": "51456446",
-      "id": 14
-    },
-    {
       "email": "thxfd",
       "name": "fxhth",
       "lastName": "dfhhdcg",
@@ -96,15 +119,6 @@
       "password": "12345678",
       "adress": "111111111111111111111",
       "id": 18
-    },
-    {
-      "email": "cinthiapardos@gmail.com",
-      "name": "Cinthia Pardos",
-      "lastName": "fsFsRf",
-      "dni": "",
-      "password": "thdgdzgsxdf",
-      "adress": "`1111111",
-      "id": 20
     },
     {
       "id": 21,
