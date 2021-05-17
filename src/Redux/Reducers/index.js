@@ -33,6 +33,7 @@ export default function rootReducer(state = initialState, action) {
     case ADD_USER:
     case GET_ALL_USERS:
     case LOGIN:
+    case EDIT_USER:
       return { ...state, loading: true }
     case GET_ALL_USERS_SUCCESS:
       return {
@@ -40,6 +41,13 @@ export default function rootReducer(state = initialState, action) {
         loading: false,
         error: false,
         users: action.payload,
+      }
+    case EDIT_USER_SUCCESS:
+    return {
+        ...state,
+        loading: false,
+        error: false,
+        users: [...((state.users).filter((user) => action.payload['id'] !== user.id)), action.payload],
       }
     case LOGIN_SUCCESS:
       return {
@@ -87,3 +95,4 @@ export default function rootReducer(state = initialState, action) {
       }
   }
 }
+

@@ -13,6 +13,7 @@ import { connect } from "react-redux"
 import { CreateNewUser } from "../Redux/Actions/actionsUsers.js"
 import NewUser from "./newUser.js"
 
+
 function RegisterSide() {
   const classes = useStyles()
 

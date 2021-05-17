@@ -11,13 +11,12 @@ import userEvent from "@testing-library/user-event"
 import { connect } from "react-redux"
 import { EditUser } from "../Redux/Actions/actionsUsers.js"
 
-function FormDialog({ user, EditUser }) {
+function FormDialog({ user, EditUser, error, loading }) {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
-  console.log(user)
   const handleClose = () => {
     setOpen(false)
   }
@@ -39,6 +38,8 @@ function FormDialog({ user, EditUser }) {
     e.preventDefault()
 
     if (values.email && values.lastName && values.name) {
+      console.log(values)
+
       EditUser(user.id, values)
       handleClose()
     }
@@ -56,6 +57,10 @@ function FormDialog({ user, EditUser }) {
       >
         <DialogTitle id="form-dialog-title">Edit User</DialogTitle>
         <DialogContent>
+        {error ? <p>There was an error. Please try again </p> : null}
+        {loading ? <p>Loading </p> : null}
+
+
           <form noValidate onSubmit={(e) => submitForm(e)}>
             <TextField
               variant="outlined"
@@ -127,7 +132,8 @@ function FormDialog({ user, EditUser }) {
 }
 
 const mapStateToProps = (state) => ({
-  error: state,
+  error: state.error,
+  loading: state.loading
 })
 
 const mapDispatchToProps = (dispatch) => ({

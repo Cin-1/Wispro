@@ -15,8 +15,6 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESS,
   LOGOUT,
-  GET_SESSION_USER,
-  GET_REGISTER,
   REDIRECT,
 } from "./constants"
 import request from "../../Services/api"
@@ -59,9 +57,9 @@ export function EditUser(id, user) {
   return async (dispatch) => {
     dispatch(editUser(user))
     try {
-      await request.put(`/users/${id}`)
-      dispatch(editUserSuccess(user))
-      Swal.fire("Succesful edition")
+      const res = await request.patch(`/users/${id}`, user)
+      dispatch(editUserSuccess(res.data))
+      Swal.fire("Successful edition")
     } catch (err) {
       console.log(err)
       dispatch(editUserErr())

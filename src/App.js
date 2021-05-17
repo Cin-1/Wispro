@@ -5,6 +5,8 @@ import { theme } from "./theme/theme"
 import SignInSide from "./Components/Login"
 import Users from "./Components/UsersTable"
 import Register from "./Components/Register"
+import EnhancedTable from "./Components/tabla"
+import NavBar from "./Components/NavBar"
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
           <Route path="/" component={SignInSide} exact />
           <Route path="/users" component={Users} />
           <Route path="/register" component={Register} exact />
-          <Route path="/post/:id" />
+          <Route path="/tabla/" component={EnhancedTable} />
+
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

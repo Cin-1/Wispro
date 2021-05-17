@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react"
-import Link from "@material-ui/core/Link"
 import { makeStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
-import { Typography, Button, FormControlLabel, Box } from "@material-ui/core"
+import { Typography, Box, Button } from "@material-ui/core"
 import { connect } from "react-redux"
 import { GetAllUsers, DeleteUser } from "../Redux/Actions/actionsUsers"
 import DeleteIcon from "@material-ui/icons/Delete"
 import InfoIcon from "@material-ui/icons/Info"
-import Dialog from "@material-ui/core/Dialog"
-import ModalEdit from "./ModalEdit"
 import FormDialog from "./ModalEdit"
 import Swal from "sweetalert2"
-import createMixins from "@material-ui/core/styles/createMixins"
 import ModalNewUser from "./ModalNewUser"
 import NavBar from "./NavBar"
 
@@ -41,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
 function Users({ users, GetAllUsers, loading, error, DeleteUser }) {
   const classes = useStyles()
 
-  const [listUsers, setListUsers] = useState([])
+  const [listUsers, setListUsers] = useState(null)
 
   useEffect(() => {
     GetAllUsers()
-    setListUsers(users)
   }, [])
+
   const deleteUserId = (id) => {
     Swal.fire({
       title: "Are you sure?",
